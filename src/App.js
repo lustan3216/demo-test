@@ -7,19 +7,18 @@ import { useEffect, useState } from "react"
 
 function App() {
   const [input, setInput] = useState(1)
-  const [offset, setOffset] = useState(1)
+  const [page, setOffset] = useState(1)
   const [data, setData] = useState([])
 
   useEffect(() => {
-    const key = 'c7dd608cba56cddab6e2e6c3fb8fea32'
-    const url = `http://api.mediastack.com/v1/news?access_key=${key}&offset=${offset}&limit=${offset}`
+    const url = `https://catfact.ninja/facts?page=${page}`
 
     axios.get(url)
       .then(({ data: hahah }) => {
         console.log(hahah.data)
         setData([...hahah.data, ...data])
       })
-  }, [offset])
+  }, [page])
 
   return (
     <div>
@@ -32,7 +31,7 @@ function App() {
           />
         </div>
         {
-          data.map((asd) => <CardItem title={asd.title} >
+          data.map((asd) => <CardItem fact={asd.fact} >
             hahahhaa
           </CardItem>)
         }
@@ -43,8 +42,8 @@ function App() {
 
 function CardItem(props) {
   return (
-    <Card style={{ background: 'black', color: 'white' }} key={props.title} >
-      {props.title} {props.children}
+    <Card style={{ background: 'black', color: 'white' }} key={props.fact} >
+      {props.fact} {props.children}
     </Card>
   )
 }
